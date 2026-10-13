@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What we found reading every file in 160 Claude skill repos | Loadout</title>
+<meta name="description" content="We downloaded the 160 most-starred Claude and agent skill repos and read every file in every skill. Scripts, links, prompt injection, plugin-only skills and name clashes, with numbers.">
+<link rel="canonical" href="{{SITE}}/audit.html">
+<meta property="og:title" content="What we found reading every file in 160 Claude skill repos">
+<meta property="og:image" content="{{SITE}}/img/og.png">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+{{HEADER}}
+<main id="main" class="page">
+  <article class="wrap">
+    <h1>What we found reading every file in 160 skill repos</h1>
+    <p>October 2026. To build the Loadout catalog we took the 160 most-starred GitHub repos tagged for Claude or agent skills, pinned each to a commit, and read every file in every skill folder as data, without running anything. Static rules flagged lines; a person read every serious hit in the repos that made it in. The method, the rules and every decision are <a href="https://github.com/{{REPO}}/tree/HEAD/tools/catalog-audit">in the repository</a>.</p>
+
+    <h2>The shape of it</h2>
+    <table class="facts">
+      <tbody>
+        <tr><th scope="row">Repos read</th><td>160, of which 152 contain at least one skill folder</td></tr>
+        <tr><th scope="row">Skill folders found</th><td>6,082 on the first pass, counting copies</td></tr>
+        <tr><th scope="row">Folders with runnable files</th><td>1,648, about 27%</td></tr>
+        <tr><th scope="row">In the catalog</th><td>{{SKILLS}} skills from <code>anthropics/skills</code> and {{REPOS}} community repos</td></tr>
+        <tr><th scope="row">Repos left out after review</th><td>10, each with the reason</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Most skills are not what the folder count suggests</h2>
+    <p>The biggest reason a skill folder did not become a catalog entry was not danger. It was that it was not a standalone skill: 118 were copies written for other agents (Codex, Cursor, OpenClaw and others), 64 only work inside their plugin because they read files the plugin provides, 33 were test fixtures or examples, and 5 loaded files from outside their own folder. Install any of those on their own and they fail, quietly.</p>
+
+    <h2>What the safety rules flagged most</h2>
+    <p>On the first pass, the most common high-severity hit by far was a symbolic link inside a skill (467 skills, nearly all in one large collection). Then: piping a download straight into a shell (87), text telling Claude to ignore instructions (43), webhook or paste-site URLs (42), text about keeping something from the user (28) and paths where secrets live (28).</p>
+    <p>Reading the hits changed the picture. Most "ignore previous instructions" lines were the opposite of an attack: skills telling Claude to treat web pages as data and refuse instructions inside them. Most install-and-run lines were quoted from vendors' own install pages in documentation. Several "secrets" hits were security tools describing what they detect. Rules find lines worth reading; they do not make the call.</p>
+
+    <h2>What was actually left out</h2>
+    <ul class="list">
+      <li>Three repos whose scripts read your browser cookies (and in one case the macOS Keychain) to act as you on other sites. Deliberate, documented, and still more access than a one-click install should grant.</li>
+      <li>One framework whose skills run hook scripts from outside their folders, so they break one by one.</li>
+      <li>Three repos with no license GitHub recognizes, until someone checks the terms.</li>
+      <li>Offensive security collections, which contain credential-access and persistence tooling by design.</li>
+      <li>One skill that writes Claude Code settings turning on bypass permissions.</li>
+      <li>A showcase repo whose skills point at that project's own files, and two repos with nothing installable left after the checks above.</li>
+    </ul>
+
+    <h2>Names collide</h2>
+    <p>Skills install into <code>~/.claude/skills/&lt;name&gt;</code>, so two skills with the same name cannot both be installed. Eight names in the catalog exist in more than one repo, for example <code>test-driven-development</code> and <code>skill-creator</code>. Loadout lists both and marks the second "Name taken" once one is installed.</p>
+
+    <h2>Limits</h2>
+    <p>This is a careful read of one commit per repo. It does not prove a skill gives good advice, and a rule only finds what it looks for. Repos change, so the catalog pins each skill to the commit that was read and shows a diff before any update.</p>
+    <p>Practical version: <a href="guide-safety.html">a checklist for reading a skill before you install it</a>.</p>
+  </article>
+</main>
+{{FOOTER}}
+</body>
+</html>

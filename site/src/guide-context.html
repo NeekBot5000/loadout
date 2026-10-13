@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Claude Code loads skills, and what they cost | Loadout</title>
+<meta name="description" content="Every skill that is on puts its name and description in Claude's context. How the skill listing budget works, what happens when it overflows, and how to use skillOverrides.">
+<link rel="canonical" href="{{SITE}}/guide-context.html">
+<meta property="og:title" content="How Claude Code loads skills, and what they cost">
+<meta property="og:image" content="{{SITE}}/img/og.png">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+{{HEADER}}
+<main id="main" class="page">
+  <article class="wrap">
+    <h1>How Claude Code loads skills, and what they cost</h1>
+    <p>Updated {{DATE}}. Facts here come from the <a href="https://code.claude.com/docs/en/skills">Claude Code skills documentation</a> and the <a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">changelog</a>; the numbers about the catalog are our own.</p>
+
+    <h2>The listing</h2>
+    <p>A skill is a folder with a <code>SKILL.md</code> file. Claude does not read every skill at the start of a chat. It reads a <em>listing</em>: every skill's name and its description. When a request matches a description, Claude opens that skill's full instructions. So the description is what makes a skill get used, and it is also what the skill costs you in every chat, whether you use it or not.</p>
+    <p>Each entry's text is capped at 1,536 characters. The whole listing has a budget of 1% of the model's context window. When the listing is over budget, Claude Code keeps every name but drops descriptions, starting with the skills you use least. A skill without its description is much less likely to be picked up on its own.</p>
+
+    <h2>How fast it fills</h2>
+    <p>Across the {{SKILLS}} skills in the Loadout catalog, the median description costs about 72 tokens and the longest about 390 (our estimate: characters divided by four). Turning all of them on would put about 108,000 tokens of descriptions in the listing, far past 1% of any current context window. Even 25 to 30 typical skills reach a couple of thousand tokens. You do not need a big collection to hit the limit; a few long descriptions will do it.</p>
+
+    <h2>Four states, not two</h2>
+    <p>Claude Code reads a <code>skillOverrides</code> setting (it works from version 2.1.129). Each key is a skill name and each value is one of:</p>
+    <table class="facts">
+      <thead><tr><th scope="col">Value</th><th scope="col">What happens</th></tr></thead>
+      <tbody>
+        <tr><th scope="row"><code>"on"</code></th><td>Name and description are listed. The same as leaving the skill out of the setting.</td></tr>
+        <tr><th scope="row"><code>"name-only"</code></th><td>Only the name is listed. The skill still works when you ask for it by name, for a few tokens.</td></tr>
+        <tr><th scope="row"><code>"user-invocable-only"</code></th><td>Hidden from Claude, still in your <code>/</code> menu.</td></tr>
+        <tr><th scope="row"><code>"off"</code></th><td>Hidden from Claude and from the menu. The files stay where they are.</td></tr>
+      </tbody>
+    </table>
+    <p>Name only is the useful middle ground for skills you call deliberately, such as a release checklist, while skills you want Claude to reach for on its own stay on.</p>
+
+    <h2>Ways to manage it</h2>
+    <ul class="list">
+      <li>Claude Code's own <code>/skills</code> menu cycles a skill's state with Space and saves it to <code>.claude/settings.local.json</code>.</li>
+      <li><code>/doctor</code> estimates the listing's size and its biggest entries; <code>/skill-doctor</code> finds skills you never use.</li>
+      <li>To give the listing more room, raise <code>skillListingBudgetFraction</code> (for example 0.02 for 2%).</li>
+      <li>If you write skills, put the key use case first in the description, since long ones get cut.</li>
+      <li><a href="./">Loadout</a> shows the cost of every skill before you install it, keeps a meter against a target you set, and saves whole setups as profiles, writing the same <code>skillOverrides</code> setting.</li>
+    </ul>
+  </article>
+</main>
+{{FOOTER}}
+</body>
+</html>

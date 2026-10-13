@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loadout: a mod manager for Claude Code skills</title>
+<meta name="description" content="Install Claude Code skills with one click and switch each one On, Name only or Off. A free Windows app with a checked catalog of 1,273 skills.">
+<link rel="canonical" href="{{SITE}}/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Loadout: a mod manager for Claude Code skills">
+<meta property="og:description" content="Install skills with one click, switch each one On, Name only or Off, and see how much of Claude's context they use.">
+<meta property="og:image" content="{{SITE}}/img/og.png">
+<meta property="og:url" content="{{SITE}}/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Loadout","operatingSystem":"Windows 10, Windows 11","applicationCategory":"DeveloperApplication","description":"A mod manager for Claude Code skills: install, switch On / Name only / Off, profiles, and a checked catalog.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/{{REPO}}/releases/latest"}</script>
+</head>
+<body>
+{{HEADER}}
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>A mod manager for Claude Code skills</h1>
+        <p class="lede">Install skills in one click, switch each On, Name only or Off, and see what they cost Claude's context.</p>
+        <div class="acts">
+          <a class="btn primary" href="https://github.com/{{REPO}}/releases/latest">Download for Windows</a>
+          <a href="catalog.html">Browse the {{SKILLS}} skills</a>
+        </div>
+      </div>
+      <div class="demo" id="demo">
+        <table>
+          <caption class="sr">Try it: change a skill's state and watch the context meter</caption>
+          <thead><tr><th class="c-state" scope="col">State</th><th scope="col">Skill</th><th class="c-tok r" scope="col">Context</th></tr></thead>
+          <tbody id="demo-rows"></tbody>
+        </table>
+        <div class="status">
+          <span class="lbl" id="demo-lbl" aria-live="polite"></span>
+          <span class="meter" id="demo-meter" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="states">
+    <div class="wrap cols">
+      <div>
+        <h2 id="states">Three states for every skill</h2>
+        <p>Each skill that is on puts its name and description in front of Claude at the start of every chat. With a few dozen installed, Claude Code starts dropping descriptions to fit, and you cannot see which. Loadout shows the cost and lets you turn each one down.</p>
+      </div>
+      <table class="facts">
+        <thead class="sr"><tr><th>State</th><th>What Claude sees</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">On</th><td>The name and the full description, so Claude picks the skill up on its own.</td></tr>
+          <tr><th scope="row">Name only</th><td>Just the name. The skill still works when you ask for it, for a few tokens.</td></tr>
+          <tr><th scope="row">Off</th><td>Nothing. The files stay where they are.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="Screenshot">
+    <div class="wrap">
+      <figure class="shot">
+        <picture>
+          <source srcset="img/screenshot-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="img/screenshot-light.png" width="1400" height="860" loading="lazy" alt="Loadout with eight skills installed. The list shows each skill's state, source, context cost and file count; the selected skill, docx, shows exactly what Claude reads and that 15 of its files can run code.">
+        </picture>
+        <figcaption>Profiles save a whole setup. Skills already in your folder show up as yours, and Loadout never removes them.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="safety" aria-labelledby="safety-h">
+    <div class="wrap cols">
+      <div>
+        <h2 id="safety-h">Checked before it is listed</h2>
+        <p>Skills are instructions Claude follows, and some include scripts that run on your computer. The catalog came from downloading {{SCANNED}} popular skill repos and reading every file in every skill for prompt injection, hidden text, reading secrets, sending data out and running code from the internet. A person read every serious finding.</p>
+        <p>{{REPOS}} community repos made it in, each pinned to the commit that was checked. The ones left out are listed with the reason in <a href="https://github.com/{{REPO}}/blob/HEAD/docs/catalog-audit.md">the audit report</a>. It is a careful check of one version, not a guarantee.</p>
+      </div>
+      <table class="facts">
+        <thead class="sr"><tr><th>What Loadout does</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Runs nothing</th><td>It only copies files. Scripts in a skill are listed before you install.</td></tr>
+          <tr><th scope="row">Refuses bad archives</th><td>Links, <code>..</code> paths and oversized files stop the install, and a failed install leaves no half-written folder.</td></tr>
+          <tr><th scope="row">Touches one setting</th><td>Only <code>skillOverrides</code> in <code>~/.claude/settings.json</code>, in one write, with a backup.</td></tr>
+          <tr><th scope="row">Keeps what it removes</th><td>Remove and update move the old folder to <code>.trash</code>.</td></tr>
+          <tr><th scope="row">Talks to GitHub only</th><td>Downloads come from <code>github.com</code> and <code>codeload.github.com</code>, nowhere else.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="start">
+    <div class="wrap stack">
+      <h2 id="start">Getting started</h2>
+      <p>Free and open source, for Windows 10 and 11, with Claude Code 2.1.129 or newer. The installer is not code-signed yet, so Windows SmartScreen may warn: choose More info, then Run anyway. Loadout updates itself after that.</p>
+      <ol class="list steps">
+        <li><a href="https://github.com/{{REPO}}/releases/latest">Download for Windows</a> and run the installer.</li>
+        <li>Open Loadout. Skills you already have show up as yours, and your current setup is saved as a profile.</li>
+        <li>Press Install on a skill, or <kbd>Enter</kbd> on a selected row. Switch states with the buttons or <kbd>Space</kbd>.</li>
+        <li>Start a new Claude Code chat to pick up the change.</li>
+      </ol>
+      <p><a class="btn primary" href="https://github.com/{{REPO}}/releases/latest">Download for Windows</a></p>
+    </div>
+  </section>
+</main>
+{{FOOTER}}
+<script src="config.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy | Loadout</title>
+<meta name="description" content="What the Loadout website and the Loadout app collect, and what they do not.">
+<link rel="canonical" href="{{SITE}}/privacy.html">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+{{HEADER}}
+<main id="main" class="page">
+  <div class="wrap">
+    <h1>Privacy</h1>
+    <p>Last updated {{DATE}}.</p>
+
+    <h2>The app</h2>
+    <p>Loadout runs on your computer. It has no account, sends no analytics and collects nothing about you. It contacts only GitHub: <code>github.com</code> and <code>codeload.github.com</code> to download skills you choose, and GitHub Releases to check for a newer version of Loadout. Everything it keeps stays on your computer, in <code>~/.loadout</code> and <code>~/.claude</code>.</p>
+
+    <h2>This website</h2>
+    <p>The site is static and is served by Cloudflare, which keeps standard request logs (such as IP address and browser) to run and protect the service. The site sets no cookies of its own and runs no analytics.</p>
+    <p>{{ADS_PARAGRAPH}}</p>
+
+    <h2>Contact</h2>
+    <p>Questions or requests: open an issue at <a href="https://github.com/{{REPO}}/issues">github.com/{{REPO}}/issues</a>.</p>
+  </div>
+</main>
+{{FOOTER}}
+</body>
+</html>

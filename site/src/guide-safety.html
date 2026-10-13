@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is this Claude skill safe to install? A checklist | Loadout</title>
+<meta name="description" content="What to read before installing a Claude Code skill from GitHub: instructions that work against you, scripts, network calls, secrets, links and hidden text.">
+<link rel="canonical" href="{{SITE}}/guide-safety.html">
+<meta property="og:title" content="Is this Claude skill safe to install? A checklist">
+<meta property="og:image" content="{{SITE}}/img/og.png">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+{{HEADER}}
+<main id="main" class="page">
+  <article class="wrap">
+    <h1>Is this skill safe to install?</h1>
+    <p>Updated {{DATE}}. A skill is text that Claude follows, plus any files next to it. Some of those files are scripts that Claude may run on your computer with your permissions. Here is what to read before you install one, drawn from checking every file in {{SCANNED}} popular skill repos.</p>
+
+    <h2>1. Read the whole SKILL.md, not the summary</h2>
+    <p>The description says when the skill is used. The body says what Claude will do. Look for instructions that work against you: telling Claude to ignore your earlier instructions, to keep something from you, to skip asking before it acts, or to turn off permission checks. Be careful with the word search here: many good skills contain the phrase "ignore previous instructions" because they tell Claude to <em>resist</em> it in web pages. Read the sentence around it.</p>
+
+    <h2>2. List the scripts</h2>
+    <p>About a quarter of the skill folders we found contain files that can run code: <code>.py</code>, <code>.sh</code>, <code>.js</code>, <code>.ps1</code> and files that start with <code>#!</code>. That is often fine (a PDF skill needs a PDF library), but each one deserves a look. Check what it imports and what it touches.</p>
+
+    <h2>3. Follow the network calls</h2>
+    <p>Search scripts for <code>requests.post</code>, <code>fetch(</code>, <code>curl</code>, <code>Invoke-RestMethod</code> and URLs. Sending data to the service the skill is about (an image API, your own app) is expected. Sending it to a webhook, a paste site or a bare IP address is not.</p>
+
+    <h2>4. Watch for secrets</h2>
+    <p>Red flags: reading <code>~/.ssh</code>, <code>~/.aws</code>, <code>.netrc</code>, the macOS Keychain, or browser cookie databases. Some popular skills read your browser cookies on purpose, to act as you on a website. That can be a deliberate feature and still be more access than you want to give.</p>
+
+    <h2>5. Don't run installers you did not choose</h2>
+    <p><code>curl ... | sh</code> and <code>irm ... | iex</code> download a script and run it at once. Quoted from a vendor's own install page in documentation, that is common. Inside a script the skill runs, it means code you never saw.</p>
+
+    <h2>6. Check the folder itself</h2>
+    <ul class="list">
+      <li><strong>Links.</strong> A symbolic link can point outside the skill folder. We found hundreds, mostly in a few large collections.</li>
+      <li><strong>Hidden text.</strong> Unicode tag characters and bidirectional overrides can hide words from a reader. Zero-width spaces are usually harmless.</li>
+      <li><strong>Files outside the folder.</strong> Skills that load <code>../../hooks/...</code> or <code>${CLAUDE_PLUGIN_ROOT}</code> belong to a larger project or plugin and break when installed alone.</li>
+      <li><strong>Settings changes.</strong> A skill that edits <code>~/.claude/settings.json</code> or turns on bypass permissions should say so plainly and ask first.</li>
+    </ul>
+
+    <h2>7. Pin what you checked</h2>
+    <p>A repo can change after you read it. Install from a specific commit and review the difference before updating. Loadout installs community skills at the commit its audit read, and shows a file-by-file diff before any update.</p>
+
+    <p>The full list of what the Loadout catalog left out, and why, is in <a href="https://github.com/{{REPO}}/blob/HEAD/docs/catalog-audit.md">the audit report</a>. See also <a href="audit.html">what we found in 160 skill repos</a>.</p>
+  </article>
+</main>
+{{FOOTER}}
+</body>
+</html>

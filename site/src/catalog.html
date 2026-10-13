@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code skills catalog: {{SKILLS}} checked skills | Loadout</title>
+<meta name="description" content="Browse {{SKILLS}} Claude Code skills from Anthropic and {{REPOS}} community repos. See what each one tells Claude, how many tokens it costs, and which files can run code.">
+<link rel="canonical" href="{{SITE}}/catalog.html">
+<meta property="og:title" content="Claude Code skills catalog | Loadout">
+<meta property="og:description" content="{{SKILLS}} checked Claude Code skills: what each one tells Claude, what it costs in context, and which files can run code.">
+<meta property="og:image" content="{{SITE}}/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+{{HEADER}}
+<main id="main" class="cat">
+  <nav class="rail" id="rail" aria-label="Filter skills"></nav>
+  <div class="listwrap">
+    <h1 class="sr">Claude Code skills catalog</h1>
+    <div class="searchrow">
+      <label class="sr" for="q">Search skills</label>
+      <input id="q" type="search" placeholder="Search skills, repos and descriptions" autocomplete="off">
+      <span class="count num" id="count" aria-live="polite"></span>
+    </div>
+    <table class="tbl">
+      <thead><tr><th scope="col">Skill</th><th class="c-src" scope="col">Source</th><th class="c-tok r" scope="col" title="Estimated tokens Claude reads when the skill is on">Context</th><th class="c-files r" scope="col">Files</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="more" id="more"></div>
+  </div>
+  <aside class="insp" id="insp" aria-label="Skill details" aria-live="polite">
+    <p class="note">Pick a skill to see exactly what Claude reads, what it costs and which files can run code.</p>
+  </aside>
+</main>
+{{FOOTER}}
+<script src="config.js"></script>
+<script src="ads.js"></script>
+<script src="catalog.js"></script>
+</body>
+</html>
