@@ -1,6 +1,6 @@
 {
   "name": "loadout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "A mod manager for Claude Code skills.",
   "type": "module",
@@ -82,7 +82,7 @@
         "provider": "github",
         "owner": "NeekBot5000",
         "repo": "loadout",
-        "releaseType": "release"
+        "releaseType": "draft"
       }
     ]
   },
